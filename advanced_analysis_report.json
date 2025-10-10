@@ -1,0 +1,31 @@
+{
+  "timestamp": "2025-10-10 18:48:14",
+  "total_papers": 25,
+  "unique_authors": 62,
+  "collaborations": 58,
+  "research_communities": 22,
+  "emerging_topics": [],
+  "anomalous_papers": 3,
+  "top_influential_authors": [
+    "Bin Liu",
+    "Tae-Hyun Oh",
+    "Hao Wang",
+    "Yun Soo Myung",
+    "Yuan-Chuan Zou"
+  ],
+  "method_distribution": {
+    "theoretical": 21,
+    "statistical": 2,
+    "spectroscopic": 5,
+    "observational": 6,
+    "experimental": 7,
+    "computational": 8
+  },
+  "object_distribution": {
+    "black_hole": 11,
+    "neutron_star": 1,
+    "star": 4,
+    "supernova": 1,
+    "galaxy": 2
+  }
+}
