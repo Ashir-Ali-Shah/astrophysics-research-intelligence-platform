@@ -31,48 +31,7 @@ class RealTimeAPIClient:
     Client for fetching real-time publication data from various APIs
     """
 
-    def __init__(self):
-        self.arxiv_base_url = "http://export.arxiv.org/api/query"
-        self.ads_base_url = "https://api.adsabs.harvard.edu/v1/search/query"
-        self.crossref_base_url = "https://api.crossref.org/works"
-        self.session = requests.Session()
-        self.session.headers.update({
-            'User-Agent': 'AstroPhysicsResearchPlatform/1.0'
-        })
 
-    def fetch_arxiv_papers(self,
-                          query: str = "astro-ph",
-                          max_results: int = 100,
-                          start: int = 0) -> List[Dict]:
-        """
-        Fetch papers from arXiv API
-        Query examples: 'astro-ph', 'black holes', 'cat:astro-ph.CO'
-        """
-        print(f"Fetching papers from arXiv (query: '{query}', max: {max_results})...")
-
-        params = {
-            'search_query': f'all:{query}' if 'cat:' not in query else query,
-            'start': start,
-            'max_results': max_results,
-            'sortBy': 'submittedDate',
-            'sortOrder': 'descending'
-        }
-
-        try:
-            response = self.session.get(
-                self.arxiv_base_url,
-                params=params,
-                timeout=30
-            )
-            response.raise_for_status()
-
-            papers = self._parse_arxiv_response(response.text)
-            print(f"✓ Fetched {len(papers)} papers from arXiv")
-            return papers
-
-        except Exception as e:
-            print(f"✗ Error fetching from arXiv: {e}")
-            return []
 
     def _parse_arxiv_response(self, xml_text: str) -> List[Dict]:
         """Parse arXiv XML response"""
@@ -80,8 +39,7 @@ class RealTimeAPIClient:
 
         try:
             root = ET.fromstring(xml_text)
-            ns = {'atom': 'http://www.w3.org/2005/Atom',
-                  'arxiv': 'http://arxiv.org/schemas/atom'}
+
 
             for entry in root.findall('atom:entry', ns):
                 paper = {}
@@ -639,7 +597,6 @@ def main():
     print("="*70)
 
     # Initialize platform
-    # To use NASA ADS, get API key from: https://ui.adsabs.harvard.edu/user/settings/token
     ads_api_key = None  # Replace with your NASA ADS API key if available
     platform = RealTimeAstroPhysicsResearchPlatform(ads_api_key=ads_api_key)
 
@@ -1460,12 +1417,7 @@ def run_advanced_analysis(platform):
 
 # Integration with existing platform - COMPLETE EXECUTABLE SCRIPT
 if __name__ == "__main__":
-    print("""
-    ╔══════════════════════════════════════════════════════════════════════╗
-    ║   ENHANCED ASTROPHYSICS RESEARCH PLATFORM                            ║
-    ║   Advanced DS + NLP Analysis Suite                                   ║
-    ╚══════════════════════════════════════════════════════════════════════╝
-    """)
+
 
     # Import the base platform
     try:
